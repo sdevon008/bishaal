@@ -27,18 +27,19 @@ const NepaliCalendar = () => {
               <AdSpace size="banner" />
             </div>
             
-            {/* Placeholder for future content */}
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-nepal-red/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Calendar className="h-8 w-8 text-nepal-red" />
-                </div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  Nepali Calendar Tool Coming Soon
-                </h2>
-                <p className="text-gray-600 max-w-md mx-auto">
-                  This feature is under development. Soon you'll be able to view detailed Nepali calendar with festivals, holidays, and daily horoscope information.
-                </p>
+            {/* Hamro Patro Calendar */}
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-8">
+              <div className="calendar-wrapper flex justify-center">
+                <iframe 
+                  src="https://www.hamropatro.com/widgets/calender-full.php" 
+                  frameBorder="0" 
+                  scrolling="no" 
+                  marginWidth="0" 
+                  marginHeight="0" 
+                  style={{ border: 'none', overflow: 'hidden', width: '100%', height: '840px', maxWidth: '800px' }} 
+                  allowTransparency={true}
+                  title="Nepali Calendar by Hamro Patro"
+                />
               </div>
             </div>
           </div>

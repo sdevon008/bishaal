@@ -55,3 +55,17 @@
   visibility: hidden !important;
   opacity: 0 !important;
 }
+
+/* Hide copyright elements in Hamro Patro iframe */
+.calendar-wrapper iframe [style*="text-align:center"],
+.calendar-wrapper iframe a[href*="hamropatro.com"],
+.calendar-wrapper iframe img[src*="hamropatro.com"],
+.calendar-wrapper iframe div[style*="font-size:11px"],
+.calendar-wrapper iframe div[style*="font-size:10px"],
+.calendar-wrapper iframe div[class*="copyright"],
+.calendar-wrapper iframe div[class*="footer"],
+.calendar-wrapper iframe footer {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
