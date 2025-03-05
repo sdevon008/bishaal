@@ -165,7 +165,7 @@ const UnicodeConverter = () => {
                 <div className="p-4 border border-gray-100 rounded-lg">
                   <h4 className="font-medium text-gray-900 mb-2">How can I download Nepali Unicode keyboard?</h4>
                   <p className="text-gray-600">
-                    Most modern operating systems already include Nepali Unicode keyboard layouts. You can enable them in your system settings. For Windows, go to Control Panel > Language > Add a language > नेपाली (Nepali).
+                    Most modern operating systems already include Nepali Unicode keyboard layouts. You can enable them in your system settings. For Windows, go to Control Panel {'>'}  Language {'>'}  Add a language {'>'}  नेपाली (Nepali).
                   </p>
                 </div>
                 <div className="p-4 border border-gray-100 rounded-lg">
