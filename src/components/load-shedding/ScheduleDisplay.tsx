@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MapPin, Clock, RefreshCw, Calendar } from 'lucide-react';
+import { MapPin, Clock, RefreshCw, Calendar, Search } from 'lucide-react';
 import CustomButton from "@/components/ui/CustomButton";
+import { Input } from "@/components/ui/input";
 
 interface ScheduleDisplayProps {
   scheduleData: {
@@ -27,6 +28,8 @@ const ScheduleDisplay: React.FC<ScheduleDisplayProps> = ({
   // Find today's day
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
   const [selectedView, setSelectedView] = useState<'calendar' | 'list'>('calendar');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeGroup, setActiveGroup] = useState('');
 
   // Function to format the last updated date
   const formatLastUpdated = (dateString: string) => {
@@ -39,6 +42,23 @@ const ScheduleDisplay: React.FC<ScheduleDisplayProps> = ({
       minute: '2-digit'
     });
   };
+
+  // Set active group to first group when data loads
+  React.useEffect(() => {
+    if (scheduleData.length > 0 && !activeGroup) {
+      setActiveGroup(scheduleData[0].group);
+    }
+  }, [scheduleData, activeGroup]);
+
+  // Filter groups based on search term
+  const filteredGroups = searchTerm 
+    ? scheduleData.filter(group => 
+        group.group.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        group.locations.some(location => 
+          location.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      )
+    : scheduleData;
 
   return (
     <div className="space-y-6">
@@ -76,6 +96,20 @@ const ScheduleDisplay: React.FC<ScheduleDisplayProps> = ({
         </div>
       </div>
 
+      {/* Search Box */}
+      <div className="relative mb-4">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <Search className="h-4 w-4 text-gray-400" />
+        </div>
+        <Input
+          type="text"
+          placeholder="Search by area or group..."
+          className="pl-10"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-pulse space-y-2 text-center">
@@ -83,25 +117,25 @@ const ScheduleDisplay: React.FC<ScheduleDisplayProps> = ({
             <p className="text-gray-500">Loading the latest schedule...</p>
           </div>
         </div>
-      ) : scheduleData.length === 0 ? (
+      ) : filteredGroups.length === 0 ? (
         <Card>
           <CardContent className="pt-6">
             <div className="text-center py-10">
-              <p className="text-gray-500">No schedule information available. Please try again later.</p>
+              <p className="text-gray-500">No matching schedule found. Please try another search term.</p>
             </div>
           </CardContent>
         </Card>
       ) : (
-        <Tabs defaultValue={scheduleData[0].group}>
-          <TabsList className="w-full grid grid-cols-3 mb-6">
-            {scheduleData.map((group) => (
-              <TabsTrigger key={group.group} value={group.group}>
+        <Tabs value={activeGroup} onValueChange={setActiveGroup}>
+          <TabsList className="w-full flex flex-wrap mb-6 h-auto">
+            {filteredGroups.map((group) => (
+              <TabsTrigger key={group.group} value={group.group} className="flex-grow">
                 {group.group}
               </TabsTrigger>
             ))}
           </TabsList>
           
-          {scheduleData.map((group) => (
+          {filteredGroups.map((group) => (
             <TabsContent key={group.group} value={group.group}>
               <Card>
                 <CardHeader>

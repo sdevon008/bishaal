@@ -190,6 +190,162 @@ class LoadSheddingService {
           }
         ],
         lastUpdated: new Date().toISOString()
+      },
+      {
+        group: "Group D",
+        locations: [
+          "Kathmandu: Baneshor, Koteshwor, Tinkune",
+          "Lalitpur: Kupondole, Sanepa, Jhamsikhel",
+          "Bhaktapur: Jagati, Changunarayan"
+        ],
+        schedule: [
+          {
+            day: "Sunday",
+            times: ["04:00 - 07:00", "16:00 - 19:00"]
+          },
+          {
+            day: "Monday",
+            times: ["07:00 - 10:00", "19:00 - 22:00"]
+          },
+          {
+            day: "Tuesday",
+            times: ["09:00 - 12:00", "21:00 - 00:00"]
+          },
+          {
+            day: "Wednesday",
+            times: ["05:00 - 08:00", "17:00 - 20:00"]
+          },
+          {
+            day: "Thursday",
+            times: ["06:00 - 09:00", "18:00 - 21:00"]
+          },
+          {
+            day: "Friday",
+            times: ["08:00 - 11:00", "20:00 - 23:00"]
+          },
+          {
+            day: "Saturday",
+            times: ["10:00 - 13:00", "22:00 - 01:00"]
+          }
+        ],
+        lastUpdated: new Date().toISOString()
+      },
+      {
+        group: "Group E",
+        locations: [
+          "Kathmandu: Gongabu, Samakhushi, Tokha",
+          "Lalitpur: Nakkhu, Sunakothi, Chapagaun",
+          "Bhaktapur: Dadhikot, Gundu"
+        ],
+        schedule: [
+          {
+            day: "Sunday",
+            times: ["07:00 - 10:00", "19:00 - 22:00"]
+          },
+          {
+            day: "Monday",
+            times: ["09:00 - 12:00", "21:00 - 00:00"]
+          },
+          {
+            day: "Tuesday",
+            times: ["05:00 - 08:00", "17:00 - 20:00"]
+          },
+          {
+            day: "Wednesday",
+            times: ["06:00 - 09:00", "18:00 - 21:00"]
+          },
+          {
+            day: "Thursday",
+            times: ["08:00 - 11:00", "20:00 - 23:00"]
+          },
+          {
+            day: "Friday",
+            times: ["10:00 - 13:00", "22:00 - 01:00"]
+          },
+          {
+            day: "Saturday",
+            times: ["04:00 - 07:00", "16:00 - 19:00"]
+          }
+        ],
+        lastUpdated: new Date().toISOString()
+      },
+      {
+        group: "Group F",
+        locations: [
+          "Kathmandu: Budhanilkantha, Kapan, Jorpati",
+          "Lalitpur: Lubhu, Lamatar, Godavari",
+          "Bhaktapur: Sipadol, Sirutar"
+        ],
+        schedule: [
+          {
+            day: "Sunday",
+            times: ["09:00 - 12:00", "21:00 - 00:00"]
+          },
+          {
+            day: "Monday",
+            times: ["05:00 - 08:00", "17:00 - 20:00"]
+          },
+          {
+            day: "Tuesday",
+            times: ["06:00 - 09:00", "18:00 - 21:00"]
+          },
+          {
+            day: "Wednesday",
+            times: ["08:00 - 11:00", "20:00 - 23:00"]
+          },
+          {
+            day: "Thursday",
+            times: ["10:00 - 13:00", "22:00 - 01:00"]
+          },
+          {
+            day: "Friday",
+            times: ["04:00 - 07:00", "16:00 - 19:00"]
+          },
+          {
+            day: "Saturday",
+            times: ["07:00 - 10:00", "19:00 - 22:00"]
+          }
+        ],
+        lastUpdated: new Date().toISOString()
+      },
+      {
+        group: "Group G",
+        locations: [
+          "Kathmandu: Kirtipur, Thankot, Chandragiri",
+          "Lalitpur: Bungamati, Khokana, Harisiddhi",
+          "Bhaktapur: Nagarkot, Bageswori"
+        ],
+        schedule: [
+          {
+            day: "Sunday",
+            times: ["05:00 - 08:00", "17:00 - 20:00"]
+          },
+          {
+            day: "Monday",
+            times: ["06:00 - 09:00", "18:00 - 21:00"]
+          },
+          {
+            day: "Tuesday",
+            times: ["08:00 - 11:00", "20:00 - 23:00"]
+          },
+          {
+            day: "Wednesday",
+            times: ["10:00 - 13:00", "22:00 - 01:00"]
+          },
+          {
+            day: "Thursday",
+            times: ["04:00 - 07:00", "16:00 - 19:00"]
+          },
+          {
+            day: "Friday",
+            times: ["07:00 - 10:00", "19:00 - 22:00"]
+          },
+          {
+            day: "Saturday",
+            times: ["09:00 - 12:00", "21:00 - 00:00"]
+          }
+        ],
+        lastUpdated: new Date().toISOString()
       }
     ];
   }
