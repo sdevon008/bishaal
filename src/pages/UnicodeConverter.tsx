@@ -33,11 +33,11 @@ const UnicodeConverter = () => {
                   className="w-full min-h-[400px] border-0"
                   src="https://www.ashesh.com.np/linknepali-unicode3.php?api=520138p335"
                   title="Nepali Unicode Converter"
-                  frameBorder="0"
+                  frameBorder={0}
                   scrolling="no"
-                  marginWidth="0"
-                  marginHeight="0"
-                  allowTransparency="true"
+                  marginWidth={0}
+                  marginHeight={0}
+                  allowTransparency={true}
                 />
               </div>
               
