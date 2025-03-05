@@ -1,6 +1,7 @@
 
 interface LoadSheddingSchedule {
   group: string;
+  locations: string[];
   schedule: {
     day: string;
     times: string[];
@@ -66,15 +67,20 @@ class LoadSheddingService {
 
   private static async fetchScheduleFromNEA(): Promise<LoadSheddingSchedule[]> {
     // In a production app, this would be a server-side function that scrapes the NEA website
-    // For now, we'll return mock data
+    // For now, we'll return mock data with improved location information
     
     // Simulating network request delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Mock data for demonstration
+    // Mock data for demonstration with locations added
     return [
       {
         group: "Group A",
+        locations: [
+          "Kathmandu: Balaju, Bansbari, Maharajgunj",
+          "Lalitpur: Pulchowk, Jawalakhel",
+          "Bhaktapur: Suryabinayak, Katunje"
+        ],
         schedule: [
           {
             day: "Sunday",
@@ -109,6 +115,11 @@ class LoadSheddingService {
       },
       {
         group: "Group B",
+        locations: [
+          "Kathmandu: Chabahil, Bouddha, New Baneshwor",
+          "Lalitpur: Patan, Satdobato, Imadol",
+          "Bhaktapur: Lokanthali, Thimi"
+        ],
         schedule: [
           {
             day: "Sunday",
@@ -137,6 +148,45 @@ class LoadSheddingService {
           {
             day: "Saturday",
             times: ["06:00 - 09:00", "18:00 - 21:00"]
+          }
+        ],
+        lastUpdated: new Date().toISOString()
+      },
+      {
+        group: "Group C",
+        locations: [
+          "Kathmandu: Kalanki, Swayambhu, Kalimati",
+          "Lalitpur: Ekantakuna, Dhapakhel",
+          "Bhaktapur: Madhyapur Thimi, Balkot"
+        ],
+        schedule: [
+          {
+            day: "Sunday",
+            times: ["10:00 - 13:00", "22:00 - 01:00"]
+          },
+          {
+            day: "Monday",
+            times: ["04:00 - 07:00", "16:00 - 19:00"]
+          },
+          {
+            day: "Tuesday",
+            times: ["07:00 - 10:00", "19:00 - 22:00"]
+          },
+          {
+            day: "Wednesday",
+            times: ["09:00 - 12:00", "21:00 - 00:00"]
+          },
+          {
+            day: "Thursday",
+            times: ["05:00 - 08:00", "17:00 - 20:00"]
+          },
+          {
+            day: "Friday",
+            times: ["06:00 - 09:00", "18:00 - 21:00"]
+          },
+          {
+            day: "Saturday",
+            times: ["08:00 - 11:00", "20:00 - 23:00"]
           }
         ],
         lastUpdated: new Date().toISOString()
