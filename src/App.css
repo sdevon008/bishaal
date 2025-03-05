@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +40,18 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Custom styles for iframe */
+.converter-wrapper iframe {
+  background-color: transparent;
+  font-family: inherit;
+}
+
+/* Hide the copyright text that might appear in the iframe */
+.converter-wrapper iframe span[style*="color:gray; font-size:8px"],
+.converter-wrapper iframe a[href*="ashesh.com.np"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
