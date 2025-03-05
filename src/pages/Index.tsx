@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calendar, 
-  LanguageIcon, 
+  LanguagesIcon, 
   Zap, 
   Book, 
   ArrowRightLeft, 
@@ -88,7 +87,7 @@ const Index = () => {
             <ToolCard
               title="Unicode Converter"
               description="Convert Nepali text between Unicode and traditional formats."
-              icon={<LanguageIcon className="h-6 w-6" />}
+              icon={<LanguagesIcon className="h-6 w-6" />}
               to="/unicode-converter"
             />
             
