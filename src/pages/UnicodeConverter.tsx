@@ -27,7 +27,10 @@ const UnicodeConverter = () => {
             </div>
             
             {/* Unicode Converter */}
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100">
+            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                Unicode Converter
+              </h3>
               <div className="converter-wrapper">
                 <iframe 
                   className="w-full min-h-[400px] border-0"
@@ -40,8 +43,30 @@ const UnicodeConverter = () => {
                   allowTransparency={true}
                 />
               </div>
-              
-              <div className="mt-6 pt-6 border-t border-gray-100">
+            </div>
+            
+            {/* Preeti to Unicode Converter */}
+            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                Preeti to Unicode Converter
+              </h3>
+              <div className="converter-wrapper">
+                <iframe 
+                  className="w-full min-h-[400px] border-0"
+                  src="https://www.ashesh.com.np/preeti-unicode/linkapi.php?api=520135p444"
+                  title="Nepali Font to Unicode Converter"
+                  frameBorder={0}
+                  scrolling="no"
+                  marginWidth={0}
+                  marginHeight={0}
+                  allowTransparency={true}
+                />
+              </div>
+            </div>
+            
+            {/* How to Use Instructions */}
+            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100">
+              <div className="mt-2">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   How to Use Unicode Converter
                 </h3>
@@ -50,6 +75,7 @@ const UnicodeConverter = () => {
                   <li>See the Unicode conversion instantly</li>
                   <li>Copy the converted text to use in documents, emails, or websites</li>
                   <li>Convert between traditional and Unicode formats as needed</li>
+                  <li>Use the Preeti to Unicode converter for converting Preeti font text to Unicode</li>
                 </ul>
               </div>
             </div>
