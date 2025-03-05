@@ -20,7 +20,7 @@ const LoadShedding = () => {
       const data = await LoadSheddingService.getSchedule();
       setScheduleData(data);
     } catch (error) {
-      console.error('Error fetching schedule:', error);
+console.error('Error fetching schedule:', error);
       toast({
         variant: "destructive",
         title: "Error",
@@ -41,7 +41,7 @@ const LoadShedding = () => {
       now.getMonth(),
       now.getDate() + 1, // tomorrow
       0, 0, 0 // midnight
-    );
+);
     const msUntilMidnight = night.getTime() - now.getTime();
     
     // Schedule the first refresh
@@ -61,7 +61,7 @@ const LoadShedding = () => {
 
   const handleManualRefresh = () => {
     fetchSchedule();
-    toast({
+ toast({
       title: "Refreshing",
       description: "Getting the latest load shedding schedule.",
     });
@@ -79,8 +79,8 @@ const LoadShedding = () => {
                 Nepal Electricity Load Shedding Schedule
               </h1>
               <p className="text-lg text-gray-600">
-                Stay updated with the latest electricity outage schedules across Nepal
-              </p>
+                Stay updated with 
+      </p>
             </div>
             
             {/* Alert Card */}
@@ -101,28 +101,28 @@ const LoadShedding = () => {
             </Card>
             
             {/* Ad Space */}
-            <div className="mb-8">
-              <AdSpace size="banner" />
+      </p>
             </div>
             
-            {/* Load Shedding Schedule */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
-              <ScheduleDisplay 
-                scheduleData={scheduleData}
-                isLoading={isLoading}
-                onRefresh={handleManualRefresh}
-              />
-            </div>
+            {/* Alert Card */}
+            <Card className="border-l-4 border-l-yellow-400 mb-6">
+              <CardContent className="p-4">
+                <div className="flex items-start">
+                  <div className="mr-3">
+                    <AlertTriangle className="h-5 w-5 text-yellow-500" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-900">Schedule Updates</h3>
+                    <p className="text-sm text-gray-600">
+                      This schedule is updated daily. Last sync with NEA website: {new Date().toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
             
-            {/* Information Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <Card className="bg-white border border-gray-100 shadow-sm">
-                <CardContent className="p-5">
-                  <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 bg-nepal-red/10 rounded-full flex items-center justify-center mr-4">
-                      <Zap className="h-5 w-5 text-nepal-red" />
-                    </div>
-                    <h2 className="text-lg font-semibold text-gray-900">
+            {/* Ad Space */}
+ <h2 className="text-lg font-semibold text-gray-900">
                       About Load Shedding
                     </h2>
                   </div>
@@ -143,7 +143,7 @@ const LoadShedding = () => {
                   <div className="flex items-center mb-4">
                     <div className="w-10 h-10 bg-nepal-blue/10 rounded-full flex items-center justify-center mr-4">
                       <Info className="h-5 w-5 text-nepal-blue" />
-                    </div>
+</div>
                     <h2 className="text-lg font-semibold text-gray-900">
                       Important Notice
                     </h2>
@@ -163,7 +163,7 @@ const LoadShedding = () => {
           </div>
         </div>
       </main>
-      
+     
       <Footer />
     </div>
   );
