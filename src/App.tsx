@@ -9,7 +9,7 @@ import DateConverter from "./pages/DateConverter";
 import NepaliCalendar from "./pages/NepaliCalendar";
 import UnicodeConverter from "./pages/UnicodeConverter";
 import LoadShedding from "./pages/LoadShedding";
-import Dictionary from "./pages/Dictionary";
+import Rashifal from "./pages/Rashifal";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,7 +26,7 @@ const App = () => (
           <Route path="/nepali-calendar" element={<NepaliCalendar />} />
           <Route path="/unicode-converter" element={<UnicodeConverter />} />
           <Route path="/load-shedding" element={<LoadShedding />} />
-          <Route path="/dictionary" element={<Dictionary />} />
+          <Route path="/rashifal" element={<Rashifal />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
