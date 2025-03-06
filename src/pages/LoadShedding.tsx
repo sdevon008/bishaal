@@ -20,7 +20,7 @@ const LoadShedding = () => {
       const data = await LoadSheddingService.getSchedule();
       setScheduleData(data);
     } catch (error) {
-console.error('Error fetching schedule:', error);
+      console.error('Error fetching schedule:', error);
       toast({
         variant: "destructive",
         title: "Error",
@@ -41,7 +41,7 @@ console.error('Error fetching schedule:', error);
       now.getMonth(),
       now.getDate() + 1, // tomorrow
       0, 0, 0 // midnight
-);
+    );
     const msUntilMidnight = night.getTime() - now.getTime();
     
     // Schedule the first refresh
@@ -61,7 +61,7 @@ console.error('Error fetching schedule:', error);
 
   const handleManualRefresh = () => {
     fetchSchedule();
- toast({
+    toast({
       title: "Refreshing",
       description: "Getting the latest load shedding schedule.",
     });
@@ -79,8 +79,8 @@ console.error('Error fetching schedule:', error);
                 Nepal Electricity Load Shedding Schedule
               </h1>
               <p className="text-lg text-gray-600">
-                Stay updated with 
-      </p>
+                Stay updated with the latest power outage schedules across Nepal.
+              </p>
             </div>
             
             {/* Alert Card */}
@@ -101,28 +101,26 @@ console.error('Error fetching schedule:', error);
             </Card>
             
             {/* Ad Space */}
-      </p>
+            <AdSpace className="mb-8" />
+            
+            {/* Load Shedding Schedule */}
+            <div className="mb-8">
+              <ScheduleDisplay 
+                data={scheduleData} 
+                isLoading={isLoading}
+                onRefresh={handleManualRefresh}
+              />
             </div>
             
-            {/* Alert Card */}
-            <Card className="border-l-4 border-l-yellow-400 mb-6">
-              <CardContent className="p-4">
-                <div className="flex items-start">
-                  <div className="mr-3">
-                    <AlertTriangle className="h-5 w-5 text-yellow-500" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-gray-900">Schedule Updates</h3>
-                    <p className="text-sm text-gray-600">
-                      This schedule is updated daily. Last sync with NEA website: {new Date().toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            {/* Ad Space */}
- <h2 className="text-lg font-semibold text-gray-900">
+            {/* Info Cards */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <Card className="bg-white border border-gray-100 shadow-sm">
+                <CardContent className="p-5">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 bg-nepal-blue/10 rounded-full flex items-center justify-center mr-4">
+                      <Zap className="h-5 w-5 text-nepal-blue" />
+                    </div>
+                    <h2 className="text-lg font-semibold text-gray-900">
                       About Load Shedding
                     </h2>
                   </div>
@@ -143,7 +141,7 @@ console.error('Error fetching schedule:', error);
                   <div className="flex items-center mb-4">
                     <div className="w-10 h-10 bg-nepal-blue/10 rounded-full flex items-center justify-center mr-4">
                       <Info className="h-5 w-5 text-nepal-blue" />
-</div>
+                    </div>
                     <h2 className="text-lg font-semibold text-gray-900">
                       Important Notice
                     </h2>
