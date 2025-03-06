@@ -101,12 +101,12 @@ const LoadShedding = () => {
             </Card>
             
             {/* Ad Space */}
-            <AdSpace className="mb-8" />
+            <AdSpace size="banner" className="mb-8" />
             
             {/* Load Shedding Schedule */}
             <div className="mb-8">
               <ScheduleDisplay 
-                data={scheduleData} 
+                scheduleData={scheduleData} 
                 isLoading={isLoading}
                 onRefresh={handleManualRefresh}
               />
