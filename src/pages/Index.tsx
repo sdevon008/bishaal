@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -5,7 +6,6 @@ import {
   LanguagesIcon, 
   Zap, 
   Book, 
-  ArrowRightLeft, 
   ChevronRight 
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
@@ -99,10 +99,17 @@ const Index = () => {
             />
             
             <ToolCard
-              title="Nepali Dictionary"
-              description="Look up Nepali words and their English translations in our comprehensive dictionary."
+              title="Rashifal"
+              description="Get your daily, weekly, and monthly horoscope predictions based on your zodiac sign."
+              icon={<Calendar className="h-6 w-6" />}
+              to="/rashifal"
+            />
+            
+            <ToolCard
+              title="Blog"
+              description="Read our latest articles about Nepali culture, technology, and useful tips."
               icon={<Book className="h-6 w-6" />}
-              to="/dictionary"
+              to="/blog"
             />
           </div>
           

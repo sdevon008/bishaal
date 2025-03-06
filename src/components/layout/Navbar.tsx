@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Menu, X, ChevronDown, Book } from 'lucide-react';
+import { Menu, X, Book } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,7 +50,7 @@ const Navbar = () => {
               "font-bold text-2xl transition-colors duration-300",
               isScrolled ? "text-nepal-red" : "text-nepal-red"
             )}>
-              NepTools
+              Bishaal Tools
             </span>
           </Link>
           
@@ -67,6 +67,7 @@ const Navbar = () => {
                     : "text-gray-700 hover:text-nepal-red"
                 )}
               >
+                {link.icon && <span className="inline-flex items-center">{link.icon}</span>}
                 {link.name}
               </Link>
             ))}
@@ -100,6 +101,7 @@ const Navbar = () => {
                       : "text-gray-700 hover:bg-gray-50 hover:text-nepal-red"
                   )}
                 >
+                  {link.icon && <span className="inline-flex items-center">{link.icon}</span>}
                   {link.name}
                 </Link>
               ))}

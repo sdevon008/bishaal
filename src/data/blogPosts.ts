@@ -1,4 +1,3 @@
-
 import { BlogPostType } from '@/types/blog';
 
 const blogPosts: BlogPostType[] = [
@@ -264,7 +263,7 @@ Nepali Unicode has revolutionized how the Nepali language functions in digital s
 
 Try our Unicode Converter today and experience seamless Nepali communication across all your devices!
     `,
-    coverImage: 'https://images.unsplash.com/photo-1516542076529-1baebf58b7bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
     publishedAt: '2023-12-05',
     category: 'Technology',
     keywords: [
