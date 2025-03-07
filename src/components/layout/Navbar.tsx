@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Menu, X, Book } from 'lucide-react';
+import { Menu, X, Book, DollarSign, Briefcase } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,6 +28,8 @@ const Navbar = () => {
     { name: 'Nepali Calendar', path: '/nepali-calendar' },
     { name: 'Unicode Converter', path: '/unicode-converter' },
     { name: 'Load Shedding', path: '/load-shedding' },
+    { name: 'Currency Converter', path: '/currency-converter', icon: <DollarSign className="h-4 w-4 mr-1" /> },
+    { name: 'Services', path: '/services', icon: <Briefcase className="h-4 w-4 mr-1" /> },
     { name: 'Rashifal', path: '/rashifal' },
     { name: 'Blog', path: '/blog', icon: <Book className="h-4 w-4 mr-1" /> },
   ];

@@ -6,7 +6,9 @@ import {
   LanguagesIcon, 
   Zap, 
   Book, 
-  ChevronRight 
+  ChevronRight,
+  DollarSign,
+  Briefcase
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -96,6 +98,20 @@ const Index = () => {
               description="Stay updated with the latest electricity load shedding schedules in Nepal."
               icon={<Zap className="h-6 w-6" />}
               to="/load-shedding"
+            />
+            
+            <ToolCard
+              title="Currency Converter"
+              description="Convert currencies and check the latest exchange rates for Nepali Rupee."
+              icon={<DollarSign className="h-6 w-6" />}
+              to="/currency-converter"
+            />
+            
+            <ToolCard
+              title="Services"
+              description="Explore our range of additional services designed to help Nepali users."
+              icon={<Briefcase className="h-6 w-6" />}
+              to="/services"
             />
             
             <ToolCard

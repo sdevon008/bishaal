@@ -12,6 +12,8 @@ import LoadShedding from "./pages/LoadShedding";
 import Rashifal from "./pages/Rashifal";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import CurrencyConverter from "./pages/CurrencyConverter";
+import Services from "./pages/Services";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => (
           <Route path="/unicode-converter" element={<UnicodeConverter />} />
           <Route path="/load-shedding" element={<LoadShedding />} />
           <Route path="/rashifal" element={<Rashifal />} />
+          <Route path="/currency-converter" element={<CurrencyConverter />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
