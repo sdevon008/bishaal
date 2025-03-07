@@ -1,10 +1,13 @@
+
 import React, { useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Calendar, ChevronLeft } from 'lucide-react';
+import { Calendar, ChevronLeft, HelpCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CustomButton from '@/components/ui/CustomButton';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const NepaliCalendar: React.FC = () => {
   const isMobile = useIsMobile();
@@ -142,6 +145,17 @@ const NepaliCalendar: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Nepali Calendar 2080-2081 | Bikram Sambat Calendar with Festivals</title>
+        <meta name="description" content="View the official Nepali Calendar (Bikram Sambat) online. Get dates, festivals, holidays, and events in Nepali date format. Easy to use BS calendar with important tithi and festivals." />
+        <meta name="keywords" content="nepali calendar, bikram sambat calendar, BS calendar, nepali patro, nepali dates, nepal festivals, nepali tithi, nepali rashifal, today's date in nepal" />
+        <meta property="og:title" content="Nepali Calendar 2080-2081 | Bikram Sambat Calendar with Festivals" />
+        <meta property="og:description" content="View the official Nepali Calendar (Bikram Sambat) online. Get dates, festivals, holidays, and events in Nepali date format. Easy to use BS calendar with important tithi and festivals." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yournepalapp.com/nepali-calendar" />
+        <link rel="canonical" href="https://yournepalapp.com/nepali-calendar" />
+      </Helmet>
+      
       <Navbar />
       
       {/* Page Header */}
@@ -224,6 +238,72 @@ const NepaliCalendar: React.FC = () => {
                   This calendar displays Nepali dates, festivals, holidays, and other important events as observed in Nepal.
                 </p>
               </div>
+            </div>
+          </div>
+          
+          {/* FAQ Section */}
+          <div className="mt-12 bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
+            <div className="p-6">
+              <div className="flex items-center mb-6">
+                <HelpCircle className="h-6 w-6 text-nepal-red mr-3" />
+                <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+              </div>
+              
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-left font-medium text-gray-800">
+                    What is the Bikram Sambat Calendar?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    Bikram Sambat (BS) is the official calendar of Nepal, introduced by Emperor Vikramaditya. It is approximately 56 years and 8.5 months ahead of the Gregorian calendar. The Nepali new year (Baishakh 1) usually falls in mid-April of the Gregorian calendar. Unlike the solar Gregorian calendar, the Nepali calendar is a lunisolar calendar based on both lunar and solar cycles.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-left font-medium text-gray-800">
+                    How many days are in a Nepali month?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    The number of days in Nepali months varies. Months in the Bikram Sambat calendar can have 29, 30, 31, or 32 days. This variation occurs because the Nepali calendar follows lunar cycles while maintaining alignment with solar years. The month of Falgun can have 28 or 29 days depending on whether it's a leap year.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-left font-medium text-gray-800">
+                    What are the names of the Nepali months?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    The twelve months in the Nepali calendar are: Baishakh, Jestha, Ashadh, Shrawan, Bhadra, Ashwin, Kartik, Mangsir, Poush, Magh, Falgun, and Chaitra. The Nepali new year begins with the month of Baishakh (typically in mid-April of the Gregorian calendar).
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-left font-medium text-gray-800">
+                    How can I convert dates between Nepali (BS) and Gregorian (AD) calendars?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    You can use our <Link to="/date-converter" className="text-nepal-red hover:underline">Date Converter tool</Link> to easily convert dates between Bikram Sambat and Gregorian calendars. This is particularly useful for official purposes, documentation, or when planning around important Nepali festivals and holidays.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-left font-medium text-gray-800">
+                    What are Tithis in the Nepali calendar?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    Tithis are lunar days in the Hindu calendar system, which is followed in the Nepali calendar. There are 15 tithis in each lunar fortnight (Paksha). These tithis are important for determining auspicious times for religious ceremonies, festivals, and rituals. Many Nepali festivals like Dashain, Tihar, and Teej are celebrated on specific tithis rather than fixed dates.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-6">
+                  <AccordionTrigger className="text-left font-medium text-gray-800">
+                    Why do Nepali festival dates change every year?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600">
+                    Nepali festivals often change dates each year because they are based on the lunisolar Bikram Sambat calendar and are tied to specific tithis (lunar days), nakshatras (stars), or other astronomical events. As the lunar calendar doesn't perfectly align with the solar year, the dates of festivals shift when viewed from the perspective of the Gregorian calendar. This is why festivals like Dashain, Tihar, and Teej fall on different Gregorian dates each year.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
           

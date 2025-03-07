@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { Helmet } from 'react-helmet';
 import { useToast } from "@/hooks/use-toast";
 import { sonnerToast } from "@/components/ui/use-toast";
 import { 
@@ -15,7 +16,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import CustomButton from '@/components/ui/CustomButton';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import ScrollToTop from '@/components/shared/ScrollToTop';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 // Define currency data structure
 interface Currency {
@@ -67,6 +68,7 @@ const CurrencyConverter = () => {
       const data = await response.json();
       
       if (data.result === 'success') {
+        console.log("Raw exchange rate data:", data);
         setExchangeRates(data.conversion_rates);
         setLastUpdated(new Date().toLocaleString());
         
@@ -74,18 +76,32 @@ const CurrencyConverter = () => {
         
         const otherCurrencies = popularCurrencies.filter(currency => currency.code !== 'NPR');
         
+        // Log what we're about to calculate
+        console.log("USD to NPR rate:", data.conversion_rates.NPR);
+        
         for (const currency of otherCurrencies) {
           const usdToNpr = data.conversion_rates.NPR;
           const usdToCurrency = data.conversion_rates[currency.code];
           
-          if (!usdToNpr || !usdToCurrency) continue;
+          if (!usdToNpr || !usdToCurrency) {
+            console.log(`Missing rate for ${currency.code}`);
+            continue;
+          }
           
-          const nprToCurrency = usdToCurrency / usdToNpr;
+          // The exchange rate from NPR to currency = (USD to currency) / (USD to NPR)
+          // This gives us how many units of currency you get per 1 NPR
+          const currencyToNpr = usdToNpr / usdToCurrency;
+          
+          console.log(`${currency.code} to NPR rate calculation:`, {
+            usdToNpr,
+            usdToCurrency,
+            result: currencyToNpr
+          });
           
           nprRates.push({
             currency: currency.code,
-            buying: parseFloat((nprToCurrency * 0.99).toFixed(4)),
-            selling: parseFloat((nprToCurrency * 1.01).toFixed(4)),
+            buying: parseFloat((currencyToNpr * 0.99).toFixed(4)),
+            selling: parseFloat((currencyToNpr * 1.01).toFixed(4)),
             lastUpdated: new Date().toLocaleString()
           });
         }
@@ -135,9 +151,18 @@ const CurrencyConverter = () => {
     const rateTo = rates[to];
     
     if (rateFrom && rateTo) {
+      // Convert amount in 'from' currency to USD
       const amountInUsd = amount / rateFrom;
+      // Convert amount in USD to 'to' currency
       const result = amountInUsd * rateTo;
       setConvertedAmount(parseFloat(result.toFixed(4)));
+      
+      console.log(`Converting ${amount} ${from} to ${to}:`, {
+        rateFrom,
+        rateTo,
+        amountInUsd,
+        result
+      });
     }
   };
 
@@ -162,8 +187,18 @@ const CurrencyConverter = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Nepal Currency Converter | Live Exchange Rates | NPR Converter</title>
+        <meta name="description" content="Free online Nepali Rupee (NPR) currency converter with live exchange rates. Convert between NPR and USD, EUR, GBP, INR, AUD, and all major world currencies." />
+        <meta name="keywords" content="nepali rupee converter, NPR exchange rate, nepal currency converter, dollar to rupee, remittance nepal, currency calculator nepal, forex rates nepal" />
+        <meta property="og:title" content="Nepal Currency Converter | Live Exchange Rates | NPR Converter" />
+        <meta property="og:description" content="Free online Nepali Rupee (NPR) currency converter with live exchange rates. Convert between NPR and USD, EUR, GBP, INR, AUD, and all major world currencies." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yournepalapp.com/currency-converter" />
+        <link rel="canonical" href="https://yournepalapp.com/currency-converter" />
+      </Helmet>
+      
       <Navbar />
-      <ScrollToTop />
       
       <main className="flex-grow pt-24 pb-12">
         <div className="container-custom">
@@ -380,48 +415,86 @@ const CurrencyConverter = () => {
             </Card>
           </div>
           
-          <section className="mt-12 bg-gray-50 rounded-xl p-6 md:p-8">
+          {/* FAQ Section */}
+          <section className="mt-12 bg-white rounded-xl p-6 md:p-8 shadow-sm border border-gray-100">
             <h2 className="text-2xl font-bold mb-6 flex items-center">
               <HelpCircle className="h-5 w-5 mr-2 text-nepal-red" />
               Frequently Asked Questions
             </h2>
             
-            <div className="space-y-4">
-              <div className="bg-white rounded-lg p-4 shadow-sm">
-                <h3 className="font-semibold text-lg mb-2">How accurate are these exchange rates?</h3>
-                <p className="text-gray-600">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  How accurate are these exchange rates?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
                   Our exchange rates are sourced from ExchangeRate-API, which provides reliable market rates. 
                   However, banks and money exchangers may offer slightly different rates. The data is updated 
-                  every minute to ensure accuracy.
-                </p>
-              </div>
+                  every minute to ensure accuracy. For the most official rates in Nepal, you can also check 
+                  the Nepal Rastra Bank website.
+                </AccordionContent>
+              </AccordionItem>
               
-              <div className="bg-white rounded-lg p-4 shadow-sm">
-                <h3 className="font-semibold text-lg mb-2">Why is there a difference between buying and selling rates?</h3>
-                <p className="text-gray-600">
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  Why is there a difference between buying and selling rates?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
                   Banks and exchange services typically have different rates for buying and selling currencies. 
                   The difference (spread) represents their profit margin. Our tool simulates this real-world scenario 
-                  with a small spread applied to NPR exchange rates.
-                </p>
-              </div>
+                  with a small spread applied to NPR exchange rates. Generally, when you're selling foreign currency, 
+                  you'll get the buying rate, and when you're purchasing foreign currency, you'll pay the selling rate.
+                </AccordionContent>
+              </AccordionItem>
               
-              <div className="bg-white rounded-lg p-4 shadow-sm">
-                <h3 className="font-semibold text-lg mb-2">Can I use these rates for commercial transactions?</h3>
-                <p className="text-gray-600">
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  Can I use these rates for commercial transactions?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
                   These rates are provided for informational purposes only. For commercial transactions, 
                   please consult with your bank or financial institution for the exact rates they offer.
-                </p>
-              </div>
+                  In Nepal, the official exchange rates are set by Nepal Rastra Bank, and commercial banks
+                  base their rates on those with slight variations.
+                </AccordionContent>
+              </AccordionItem>
               
-              <div className="bg-white rounded-lg p-4 shadow-sm">
-                <h3 className="font-semibold text-lg mb-2">How to send money to Nepal with the best exchange rates?</h3>
-                <p className="text-gray-600">
-                  Compare rates from different money transfer services like Western Union, MoneyGram, and online 
-                  remittance services. Look beyond the exchange rate to consider fees and transfer speed. 
-                  The Nepal Rastra Bank website also publishes official exchange rates for reference.
-                </p>
-              </div>
-            </div>
+              <AccordionItem value="item-4">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  How to send money to Nepal with the best exchange rates?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  To get the best rates when sending money to Nepal, compare services like Western Union, 
+                  MoneyGram, and online remittance platforms such as Wise (formerly TransferWise), Remitly, 
+                  and WorldRemit. Look beyond the exchange rate to consider fees and transfer speed. Many 
+                  Nepalis in the US, UK, Australia, and the Middle East use these services regularly for remittances.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-5">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  Why do exchange rates fluctuate?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  Exchange rates fluctuate due to factors like inflation rates, interest rates, political stability, 
+                  economic performance, and market speculation. For the Nepali Rupee specifically, factors like 
+                  remittance inflows, trade balances with India (as NPR is pegged to INR), tourism trends, and 
+                  central bank policies play significant roles in determining its value against other currencies.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-6">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  What is the best currency to bring to Nepal when traveling?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  US Dollars are widely accepted for exchange in Nepal, followed by Euros and British Pounds. 
+                  Major hotels, travel agencies and some larger shops in tourist areas may accept these currencies 
+                  directly. However, for the best rates, exchange at banks or official money changers in Kathmandu, 
+                  Pokhara, and other major cities. ATMs are also widely available in urban areas for withdrawing NPR.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </section>
           
           <section className="mt-12 max-w-3xl mx-auto text-gray-700">

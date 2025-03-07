@@ -1,341 +1,315 @@
-
+<lov-codelov-code>
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AdSpace from '@/components/shared/AdSpace';
-import { CalendarDays, ArrowLeftRight, AlertCircle } from 'lucide-react';
+import { Calendar, ArrowRight, HelpCircle } from 'lucide-react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import CustomButton from '@/components/ui/CustomButton';
-import {
-  adToBs,
-  bsToAd,
-  formatAdDate,
-  formatBsDate,
-  getCurrentBsDate,
-  BS_MONTHS_EN,
-  AD_MONTHS,
-  isValidBsDate,
-  getDaysInBsMonth,
-  minBsYear,
-  maxBsYear
-} from '@/lib/nepaliDateConverter';
+import { bsToAd, adToBs, getBsMonthDays, getAdMonthDays, getBsMonthText, getAdMonthText } from '@/lib/nepaliDateConverter';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+type DateType = 'bs' | 'ad';
 
 const DateConverter = () => {
-  // State for BS date
-  const [bsYear, setBsYear] = useState<number>(0);
-  const [bsMonth, setBsMonth] = useState<number>(0);
+  const [dateType, setDateType] = useState<DateType>('bs');
+  const [bsYear, setBsYear] = useState<number>(2080);
+  const [bsMonth, setBsMonth] = useState<number>(1);
   const [bsDay, setBsDay] = useState<number>(1);
-  const [bsMaxDay, setBsMaxDay] = useState<number>(30);
+  const [adYear, setAdYear] = useState<number>(2024);
+  const [adMonth, setAdMonth] = useState<number>(1);
+  const [adDay, setAdDay] = useState<number>(1);
+  const [convertedDate, setConvertedDate] = useState<string | null>(null);
   
-  // State for AD date
-  const [adYear, setAdYear] = useState<number>(new Date().getFullYear());
-  const [adMonth, setAdMonth] = useState<number>(new Date().getMonth());
-  const [adDay, setAdDay] = useState<number>(new Date().getDate());
-  
-  // State for results and errors
-  const [bsResult, setBsResult] = useState<string>('');
-  const [adResult, setAdResult] = useState<string>('');
-  const [bsError, setBsError] = useState<string>('');
-  const [adError, setAdError] = useState<string>('');
-  
-  // Set initial BS date
+  const currentYear = new Date().getFullYear();
+  const bsStartYear = 2000;
+  const bsEndYear = 2100;
+  const adStartYear = 1950;
+  const adEndYear = currentYear + 50;
+
   useEffect(() => {
-    const currentBsDate = getCurrentBsDate();
-    setBsYear(currentBsDate.year);
-    setBsMonth(currentBsDate.month);
-    setBsDay(currentBsDate.day);
-    updateBsMaxDay(currentBsDate.year, currentBsDate.month);
-  }, []);
-  
-  // Update max days whenever BS month or year changes
-  useEffect(() => {
-    updateBsMaxDay(bsYear, bsMonth);
-  }, [bsYear, bsMonth]);
-  
-  // Function to update max days in a BS month
-  const updateBsMaxDay = (year: number, month: number) => {
-    try {
-      const maxDay = getDaysInBsMonth(year, month);
-      setBsMaxDay(maxDay);
-      if (bsDay > maxDay) {
-        setBsDay(maxDay);
+    convertDate();
+  }, [dateType, bsYear, bsMonth, bsDay, adYear, adMonth, adDay]);
+
+  const convertDate = () => {
+    if (dateType === 'bs') {
+      try {
+        const adDate = bsToAd(bsYear, bsMonth, bsDay);
+        setConvertedDate(`${getAdMonthText(adDate.month)} ${adDate.day}, ${adDate.year}`);
+        setAdYear(adDate.year);
+        setAdMonth(adDate.month);
+        setAdDay(adDate.day);
+      } catch (error) {
+        setConvertedDate('Invalid Date');
       }
-    } catch (error) {
-      console.error('Error updating max days:', error);
+    } else {
+      try {
+        const bsDate = adToBs(adYear, adMonth, adDay);
+        setConvertedDate(`${getBsMonthText(bsDate.month)} ${bsDate.day}, ${bsDate.year}`);
+        setBsYear(bsDate.year);
+        setBsMonth(bsDate.month);
+        setBsDay(bsDate.day);
+      } catch (error) {
+        setConvertedDate('Invalid Date');
+      }
     }
   };
-  
-  // Convert BS to AD
-  const convertBsToAd = () => {
-    setBsError('');
-    setAdResult('');
-    
-    try {
-      if (!isValidBsDate(bsYear, bsMonth, bsDay)) {
-        setBsError(`Invalid Nepali date! Valid range is ${minBsYear} to ${maxBsYear} BS.`);
-        return;
-      }
-      
-      const adDate = bsToAd(bsYear, bsMonth, bsDay);
-      setAdYear(adDate.getFullYear());
-      setAdMonth(adDate.getMonth());
-      setAdDay(adDate.getDate());
-      
-      const formattedAdDate = formatAdDate(adDate);
-      setAdResult(formattedAdDate);
-    } catch (error) {
-      console.error(error);
-      setBsError('Error converting date. Please check inputs.');
-    }
+
+  const handleSwap = () => {
+    setDateType(dateType === 'bs' ? 'ad' : 'bs');
   };
-  
-  // Convert AD to BS
-  const convertAdToBs = () => {
-    setAdError('');
-    setBsResult('');
-    
-    try {
-      const adDate = new Date(adYear, adMonth, adDay);
-      
-      // Check if date is valid
-      if (isNaN(adDate.getTime())) {
-        setAdError('Invalid English date!');
-        return;
-      }
-      
-      const bsDate = adToBs(adDate);
-      setBsYear(bsDate.year);
-      setBsMonth(bsDate.month);
-      setBsDay(bsDate.day);
-      
-      const formattedBsDate = formatBsDate(bsDate);
-      setBsResult(formattedBsDate);
-    } catch (error) {
-      console.error(error);
-      setAdError('Error converting date. Please check inputs.');
-    }
-  };
-  
-  // Handle form submission
-  const handleBsSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    convertBsToAd();
-  };
-  
-  const handleAdSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    convertAdToBs();
-  };
-  
+
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Nepali Date Converter | Convert BS to AD and AD to BS Dates</title>
+        <meta name="description" content="Free online Nepali date converter to easily convert between Bikram Sambat (BS) and Gregorian (AD) dates. Accurate and fast BS to AD and AD to BS conversion." />
+        <meta name="keywords" content="nepali date converter, bs to ad, ad to bs, bikram sambat converter, nepali calendar converter, date conversion nepal" />
+        <meta property="og:title" content="Nepali Date Converter | Convert BS to AD and AD to BS Dates" />
+        <meta property="og:description" content="Free online Nepali date converter to easily convert between Bikram Sambat (BS) and Gregorian (AD) dates. Accurate and fast BS to AD and AD to BS conversion." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yournepalapp.com/date-converter" />
+        <link rel="canonical" href="https://yournepalapp.com/date-converter" />
+      </Helmet>
+      
       <Navbar />
       
-      <main className="flex-grow pt-24 pb-16">
+      <main className="flex-grow pt-24 pb-12">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Nepali Date Converter
-              </h1>
-              <p className="text-lg text-gray-600">
-                Convert dates between Bikram Sambat (BS) and Gregorian Calendar (AD) quickly and accurately.
-              </p>
-            </div>
-            
-            {/* Ad Space */}
-            <div className="mb-8">
-              <AdSpace size="banner" />
-            </div>
-            
-            {/* Date Converter */}
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* BS to AD Converter */}
-                <div className="bg-nepal-red/5 rounded-lg p-6">
-                  <div className="flex items-center mb-4">
-                    <CalendarDays className="h-6 w-6 text-nepal-red mr-2" />
-                    <h2 className="text-xl font-semibold text-gray-900">
-                      BS to AD Converter
-                    </h2>
-                  </div>
+          <header className="text-center mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Nepali Date Converter
+            </h1>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Easily convert dates between Bikram Sambat (BS) and Gregorian (AD) calendars.
+            </p>
+          </header>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card className="shadow-md">
+              <CardHeader className="bg-gray-50 border-b">
+                <CardTitle className="flex items-center text-xl">
+                  <Calendar className="h-5 w-5 mr-2 text-nepal-red" />
+                  Date Converter
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <Tabs defaultValue={dateType} className="w-full">
+                  <TabsList>
+                    <TabsTrigger value="bs" onClick={() => setDateType('bs')}>
+                      Bikram Sambat (BS)
+                    </TabsTrigger>
+                    <TabsTrigger value="ad" onClick={() => setDateType('ad')}>
+                      Gregorian (AD)
+                    </TabsTrigger>
+                  </TabsList>
                   
-                  <form onSubmit={handleBsSubmit}>
-                    <div className="grid grid-cols-3 gap-4 mb-4">
-                      <div>
-                        <label htmlFor="bs-year" className="block text-sm font-medium text-gray-700 mb-1">
-                          Year (साल)
-                        </label>
-                        <Input
-                          id="bs-year"
-                          type="number"
-                          min={minBsYear}
-                          max={maxBsYear}
-                          value={bsYear}
-                          onChange={(e) => setBsYear(parseInt(e.target.value) || 0)}
-                          className="w-full"
-                        />
+                  <TabsContent value="bs">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="bsYear">Year</Label>
+                        <Select value={String(bsYear)} onValueChange={(value) => setBsYear(Number(value))}>
+                          <SelectTrigger id="bsYear">
+                            <SelectValue placeholder="Select Year" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Array.from({ length: bsEndYear - bsStartYear + 1 }, (_, i) => bsStartYear + i).map((year) => (
+                              <SelectItem key={year} value={String(year)}>
+                                {year}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                       
-                      <div>
-                        <label htmlFor="bs-month" className="block text-sm font-medium text-gray-700 mb-1">
-                          Month (महिना)
-                        </label>
-                        <select
-                          id="bs-month"
-                          value={bsMonth}
-                          onChange={(e) => setBsMonth(parseInt(e.target.value))}
-                          className="w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm h-10"
-                        >
-                          {BS_MONTHS_EN.map((month, index) => (
-                            <option key={index} value={index}>
-                              {month}
-                            </option>
-                          ))}
-                        </select>
+                      <div className="space-y-2">
+                        <Label htmlFor="bsMonth">Month</Label>
+                        <Select value={String(bsMonth)} onValueChange={(value) => setBsMonth(Number(value))}>
+                          <SelectTrigger id="bsMonth">
+                            <SelectValue placeholder="Select Month" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                              <SelectItem key={month} value={String(month)}>
+                                {getBsMonthText(month)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                       
-                      <div>
-                        <label htmlFor="bs-day" className="block text-sm font-medium text-gray-700 mb-1">
-                          Day (गते)
-                        </label>
-                        <Input
-                          id="bs-day"
-                          type="number"
-                          min={1}
-                          max={bsMaxDay}
-                          value={bsDay}
-                          onChange={(e) => setBsDay(parseInt(e.target.value) || 1)}
-                          className="w-full"
-                        />
+                      <div className="space-y-2">
+                        <Label htmlFor="bsDay">Day</Label>
+                        <Select value={String(bsDay)} onValueChange={(value) => setBsDay(Number(value))}>
+                          <SelectTrigger id="bsDay">
+                            <SelectValue placeholder="Select Day" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Array.from({ length: getBsMonthDays(bsYear, bsMonth) }, (_, i) => i + 1).map((day) => (
+                              <SelectItem key={day} value={String(day)}>
+                                {day}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
-                    
-                    {bsError && (
-                      <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md flex items-start">
-                        <AlertCircle className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                        <span>{bsError}</span>
+                  </TabsContent>
+                  
+                  <TabsContent value="ad">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="adYear">Year</Label>
+                        <Select value={String(adYear)} onValueChange={(value) => setAdYear(Number(value))}>
+                          <SelectTrigger id="adYear">
+                            <SelectValue placeholder="Select Year" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Array.from({ length: adEndYear - adStartYear + 1 }, (_, i) => adStartYear + i).map((year) => (
+                              <SelectItem key={year} value={String(year)}>
+                                {year}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
-                    )}
-                    
-                    <CustomButton 
-                      type="submit" 
-                      className="w-full"
-                    >
-                      Convert to AD
-                    </CustomButton>
-                    
-                    {adResult && (
-                      <div className="mt-4 p-4 bg-green-50 text-green-800 rounded-md">
-                        <p className="font-medium mb-1">Result (AD):</p>
-                        <p className="text-lg">{adResult}</p>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="adMonth">Month</Label>
+                        <Select value={String(adMonth)} onValueChange={(value) => setAdMonth(Number(value))}>
+                          <SelectTrigger id="adMonth">
+                            <SelectValue placeholder="Select Month" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                              <SelectItem key={month} value={String(month)}>
+                                {getAdMonthText(month)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
-                    )}
-                  </form>
+                      
+                      <div className="space-y-2">
+                        <Label htmlFor="adDay">Day</Label>
+                        <Select value={String(adDay)} onValueChange={(value) => setAdDay(Number(value))}>
+                          <SelectTrigger id="adDay">
+                            <SelectValue placeholder="Select Day" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Array.from({ length: getAdMonthDays(adYear, adMonth) }, (_, i) => i + 1).map((day) => (
+                              <SelectItem key={day} value={String(day)}>
+                                {day}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+                
+                <div className="flex items-center justify-center my-6">
+                  <Button variant="outline" size="icon" onClick={handleSwap}>
+                    <ArrowRight className="h-4 w-4 rotate-90" />
+                  </Button>
                 </div>
                 
-                {/* AD to BS Converter */}
-                <div className="bg-nepal-blue/5 rounded-lg p-6">
-                  <div className="flex items-center mb-4">
-                    <CalendarDays className="h-6 w-6 text-nepal-blue mr-2" />
-                    <h2 className="text-xl font-semibold text-gray-900">
-                      AD to BS Converter
-                    </h2>
+                {convertedDate && (
+                  <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <div className="text-sm text-gray-500 mb-2">Converted Date:</div>
+                    <div className="text-2xl font-semibold">{convertedDate}</div>
                   </div>
-                  
-                  <form onSubmit={handleAdSubmit}>
-                    <div className="grid grid-cols-3 gap-4 mb-4">
-                      <div>
-                        <label htmlFor="ad-year" className="block text-sm font-medium text-gray-700 mb-1">
-                          Year
-                        </label>
-                        <Input
-                          id="ad-year"
-                          type="number"
-                          min={1944}
-                          max={2033}
-                          value={adYear}
-                          onChange={(e) => setAdYear(parseInt(e.target.value) || 0)}
-                          className="w-full"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="ad-month" className="block text-sm font-medium text-gray-700 mb-1">
-                          Month
-                        </label>
-                        <select
-                          id="ad-month"
-                          value={adMonth}
-                          onChange={(e) => setAdMonth(parseInt(e.target.value))}
-                          className="w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm h-10"
-                        >
-                          {AD_MONTHS.map((month, index) => (
-                            <option key={index} value={index}>
-                              {month}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="ad-day" className="block text-sm font-medium text-gray-700 mb-1">
-                          Day
-                        </label>
-                        <Input
-                          id="ad-day"
-                          type="number"
-                          min={1}
-                          max={31}
-                          value={adDay}
-                          onChange={(e) => setAdDay(parseInt(e.target.value) || 1)}
-                          className="w-full"
-                        />
-                      </div>
-                    </div>
-                    
-                    {adError && (
-                      <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md flex items-start">
-                        <AlertCircle className="h-5 w-5 mr-2 mt-0.5 flex-shrink-0" />
-                        <span>{adError}</span>
-                      </div>
-                    )}
-                    
-                    <CustomButton 
-                      type="submit" 
-                      className="w-full bg-nepal-blue hover:bg-nepal-blue/90"
-                    >
-                      Convert to BS
-                    </CustomButton>
-                    
-                    {bsResult && (
-                      <div className="mt-4 p-4 bg-blue-50 text-blue-800 rounded-md">
-                        <p className="font-medium mb-1">Result (BS):</p>
-                        <p className="text-lg">{bsResult}</p>
-                      </div>
-                    )}
-                  </form>
+                )}
+              </CardContent>
+            </Card>
+            
+            <Card className="shadow-md">
+              <CardHeader className="bg-gray-50 border-b">
+                <CardTitle className="flex items-center text-xl">
+                  <Calendar className="h-5 w-5 mr-2 text-nepal-red" />
+                  About Nepali Date (Bikram Sambat)
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div className="space-y-4 text-gray-600">
+                  <p>
+                    The Bikram Sambat (BS) is the official calendar of Nepal. It is approximately 56 years and 8.5 months ahead of the Gregorian calendar.
+                  </p>
+                  <p>
+                    The new year in BS usually falls in mid-April of the Gregorian calendar.
+                  </p>
+                  <p>
+                    Use this tool to convert dates between BS and AD for various purposes.
+                  </p>
                 </div>
-              </div>
-              
-              <div className="mt-8 flex justify-center">
-                <div className="flex items-center p-3 bg-gray-50 rounded-full">
-                  <ArrowLeftRight className="h-5 w-5 text-gray-500" />
-                </div>
-              </div>
-              
-              <div className="mt-6 text-center">
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  About Nepali Date (BS) Converter
-                </h3>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  The Nepali calendar, also known as Bikram Sambat (BS), is the official calendar of Nepal.
-                  It is approximately 56 years and 8.5 months ahead of the Gregorian (AD) calendar.
-                  This tool supports date conversion between years {minBsYear} BS to {maxBsYear} BS.
-                </p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
+          
+          {/* FAQ Section */}
+          <section className="mt-12 bg-white rounded-xl p-6 md:p-8 shadow-sm border border-gray-100">
+            <h2 className="text-2xl font-bold mb-6 flex items-center">
+              <HelpCircle className="h-5 w-5 mr-2 text-nepal-red" />
+              Frequently Asked Questions
+            </h2>
+            
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  How accurate is this Nepali date converter?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  Our Nepali date converter uses verified algorithms to ensure high accuracy. However, minor discrepancies may occur due to variations in different calendar systems. Always cross-verify with official sources for critical applications.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  Why is the Nepali calendar different from the Gregorian calendar?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  The Nepali calendar (Bikram Sambat) is a lunisolar calendar, while the Gregorian calendar is a solar calendar. This means the BS calendar is based on both the moon's phases and the Earth's orbit around the sun, leading to differences in date calculations.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  Can I convert dates from past centuries?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  Yes, our converter supports a wide range of dates. However, accuracy may decrease for dates before 1900 AD due to historical variations in calendar systems.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-4">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  How do I use this tool to find auspicious dates?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  While our tool primarily converts dates, you can use it to identify corresponding dates in the Nepali calendar for traditional events. Consult a Nepali calendar or "Panchang" for specific auspicious dates and times.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="item-5">
+                <AccordionTrigger className="text-left font-medium text-gray-800">
+                  Is this tool suitable for official purposes?
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600">
+                  While we strive for accuracy, this tool is intended for informational purposes only. Always verify converted dates with official documents or government sources for legal or official use.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </section>
+          
+          {/* Ad Space */}
+          <AdSpace size="banner" className="mt-8" />
         </div>
       </main>
       
@@ -345,3 +319,4 @@ const DateConverter = () => {
 };
 
 export default DateConverter;
+</lov-code>

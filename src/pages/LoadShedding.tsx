@@ -1,13 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AdSpace from '@/components/shared/AdSpace';
-import { Zap, Info, AlertTriangle } from 'lucide-react';
+import { Zap, Info, AlertTriangle, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import ScheduleDisplay from '@/components/load-shedding/ScheduleDisplay';
 import LoadSheddingService from '@/services/LoadSheddingService';
 import { useToast } from '@/components/ui/use-toast';
 import { Card, CardContent } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const LoadShedding = () => {
   const { toast } = useToast();
@@ -69,6 +71,17 @@ const LoadShedding = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Nepal Load Shedding Schedule 2025 | Latest NEA Power Outage Updates</title>
+        <meta name="description" content="Get accurate and updated Nepal Electricity Authority (NEA) load shedding schedule 2025. Find your area's power outage timings across Kathmandu, Lalitpur, Bhaktapur and all major cities." />
+        <meta name="keywords" content="Nepal load shedding, NEA schedule, power outage, electricity cuts, loadshedding Nepal, Kathmandu power schedule, Nepal Electricity Authority" />
+        <meta property="og:title" content="Nepal Load Shedding Schedule 2025 | Latest NEA Power Outage Updates" />
+        <meta property="og:description" content="Get accurate and updated Nepal Electricity Authority (NEA) load shedding schedule 2025. Find your area's power outage timings across Kathmandu, Lalitpur, Bhaktapur and all major cities." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://yournepalapp.com/load-shedding" />
+        <link rel="canonical" href="https://yournepalapp.com/load-shedding" />
+      </Helmet>
+      
       <Navbar />
       
       <main className="flex-grow pt-24 pb-16 bg-gray-50">
@@ -158,6 +171,63 @@ const LoadShedding = () => {
                 </CardContent>
               </Card>
             </div>
+            
+            {/* FAQ Section */}
+            <section className="mb-12 bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+              <div className="p-6">
+                <div className="flex items-center mb-6">
+                  <HelpCircle className="h-6 w-6 text-nepal-red mr-3" />
+                  <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+                </div>
+                
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger className="text-left font-medium text-gray-800">
+                      What is the current load shedding situation in Nepal?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600">
+                      As of 2025, Nepal has significantly reduced load shedding compared to previous years. However, occasional power outages still occur in certain areas due to maintenance, technical issues, or high demand periods. The Nepal Electricity Authority (NEA) implements scheduled power cuts only when necessary, and this page provides the most up-to-date information on these schedules.
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="item-2">
+                    <AccordionTrigger className="text-left font-medium text-gray-800">
+                      How do I find which load shedding group my area belongs to?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600">
+                      You can identify your load shedding group by checking the "Locations" section in each group's details on this page. Find the area that matches or is closest to your location. If you're still unsure, you can contact your local NEA office or check the official NEA website where they list areas by group.
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="item-3">
+                    <AccordionTrigger className="text-left font-medium text-gray-800">
+                      Why does load shedding still happen despite Nepal's hydropower potential?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600">
+                      Despite Nepal's significant hydropower potential, several factors contribute to occasional load shedding: seasonal variations in water levels (especially during dry winter months), growing electricity demand, limitations in transmission infrastructure, technical issues, and maintenance requirements. The government and NEA continue to invest in expanding generation capacity and improving distribution systems to address these challenges.
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="item-4">
+                    <AccordionTrigger className="text-left font-medium text-gray-800">
+                      How often is the load shedding schedule updated?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600">
+                      Our load shedding schedule is updated daily to reflect the latest information from the Nepal Electricity Authority. We automatically sync with NEA's data to ensure you have access to the most current schedule. You can also manually refresh the data using the refresh button on this page.
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  <AccordionItem value="item-5">
+                    <AccordionTrigger className="text-left font-medium text-gray-800">
+                      What alternatives can I use during power outages?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-gray-600">
+                      During power outages, you can use inverters, solar systems, power banks for small devices, or generators as backup power sources. Many households and businesses in Nepal have invested in these alternatives to ensure continuous power supply. Energy-efficient LED lights and appliances can also help conserve power during limited electricity availability.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            </section>
           </div>
         </div>
       </main>
