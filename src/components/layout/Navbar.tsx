@@ -2,7 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Menu, X, Book, DollarSign, Briefcase } from 'lucide-react';
+import { 
+  Menu, 
+  X, 
+  Book, 
+  DollarSign, 
+  Briefcase, 
+  Calendar, 
+  Globe, 
+  Zap, 
+  Home,
+  BarChart
+} from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,14 +34,14 @@ const Navbar = () => {
   }, [location.pathname]);
   
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Date Converter', path: '/date-converter' },
-    { name: 'Nepali Calendar', path: '/nepali-calendar' },
-    { name: 'Unicode Converter', path: '/unicode-converter' },
-    { name: 'Load Shedding', path: '/load-shedding' },
+    { name: 'Home', path: '/', icon: <Home className="h-4 w-4 mr-1" /> },
+    { name: 'Date Converter', path: '/date-converter', icon: <Calendar className="h-4 w-4 mr-1" /> },
+    { name: 'Nepali Calendar', path: '/nepali-calendar', icon: <Calendar className="h-4 w-4 mr-1" /> },
+    { name: 'Unicode Converter', path: '/unicode-converter', icon: <Globe className="h-4 w-4 mr-1" /> },
+    { name: 'Load Shedding', path: '/load-shedding', icon: <Zap className="h-4 w-4 mr-1" /> },
     { name: 'Currency Converter', path: '/currency-converter', icon: <DollarSign className="h-4 w-4 mr-1" /> },
     { name: 'Services', path: '/services', icon: <Briefcase className="h-4 w-4 mr-1" /> },
-    { name: 'Rashifal', path: '/rashifal' },
+    { name: 'Rashifal', path: '/rashifal', icon: <BarChart className="h-4 w-4 mr-1" /> },
     { name: 'Blog', path: '/blog', icon: <Book className="h-4 w-4 mr-1" /> },
   ];
   
@@ -63,13 +74,13 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={cn(
-                  "px-4 py-2 rounded-md text-sm font-medium transition-all duration-300",
+                  "px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 flex items-center",
                   location.pathname === link.path
                     ? "text-white bg-nepal-red"
                     : "text-gray-700 hover:text-nepal-red"
                 )}
               >
-                {link.icon && <span className="inline-flex items-center">{link.icon}</span>}
+                {link.icon}
                 {link.name}
               </Link>
             ))}
@@ -97,13 +108,13 @@ const Navbar = () => {
                   key={link.path}
                   to={link.path}
                   className={cn(
-                    "block px-4 py-3 text-sm font-medium transition-all duration-300",
+                    "block px-4 py-3 text-sm font-medium transition-all duration-300 flex items-center",
                     location.pathname === link.path
                       ? "bg-nepal-red text-white"
                       : "text-gray-700 hover:bg-gray-50 hover:text-nepal-red"
                   )}
                 >
-                  {link.icon && <span className="inline-flex items-center">{link.icon}</span>}
+                  {link.icon}
                   {link.name}
                 </Link>
               ))}

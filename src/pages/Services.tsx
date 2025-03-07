@@ -4,31 +4,36 @@ import { Link } from 'react-router-dom';
 import { 
   Briefcase, 
   ArrowRight,
-  CreditCard,
-  MailOpen,
+  HelpCircle,
+  FileText,
   Globe,
-  Smartphone
+  UserCheck,
+  FileSpreadsheet,
+  Shield,
+  MessageSquare
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import CustomButton from '@/components/ui/CustomButton';
+import ScrollToTop from '@/components/shared/ScrollToTop';
+
+interface ServiceCardProps {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  features: string[];
+}
 
 const ServiceCard = ({ 
   title, 
   description, 
-  icon, 
-  buttonText = "Learn More",
-  comingSoon = false,
-  linkTo = "#"
-}: { 
-  title: string; 
-  description: string; 
-  icon: React.ReactNode;
-  buttonText?: string;
-  comingSoon?: boolean;
-  linkTo?: string;
-}) => {
+  icon,
+  features
+}: ServiceCardProps) => {
+  // WhatsApp contact link with predefined message
+  const whatsappLink = `https://wa.me/9779808848817?text=Hello, I'm interested in your ${title} service from Bishaal Tools website. Can you provide more information?`;
+  
   return (
     <Card className="shadow-sm border-t-4 border-t-nepal-red transition-all duration-300 hover:shadow-lg">
       <CardHeader>
@@ -40,44 +45,90 @@ const ServiceCard = ({
       </CardHeader>
       <CardContent>
         <ul className="space-y-2 text-sm text-gray-600">
-          {comingSoon ? (
-            <li className="text-center py-6 text-amber-600 font-medium">Coming Soon</li>
-          ) : (
-            <>
-              <li className="flex items-center">
-                <span className="mr-2 text-green-500">✓</span> Feature 1
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2 text-green-500">✓</span> Feature 2
-              </li>
-              <li className="flex items-center">
-                <span className="mr-2 text-green-500">✓</span> Feature 3
-              </li>
-            </>
-          )}
+          {features.map((feature, index) => (
+            <li key={index} className="flex items-center">
+              <span className="mr-2 text-green-500">✓</span> {feature}
+            </li>
+          ))}
         </ul>
       </CardContent>
       <CardFooter>
-        {comingSoon ? (
-          <CustomButton variant="outline" className="w-full" disabled>
-            Coming Soon
+        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="w-full">
+          <CustomButton 
+            rightIcon={<MessageSquare className="h-4 w-4" />} 
+            className="w-full"
+          >
+            Contact Now
           </CustomButton>
-        ) : (
-          <Link to={linkTo} className="w-full">
-            <CustomButton rightIcon={<ArrowRight className="h-4 w-4" />} className="w-full">
-              {buttonText}
-            </CustomButton>
-          </Link>
-        )}
+        </a>
       </CardFooter>
     </Card>
   );
 };
 
 const Services = () => {
+  const services = [
+    {
+      title: "Demat Account",
+      description: "Hassle-free Demat account opening service for Nepali investors.",
+      icon: <FileSpreadsheet className="h-6 w-6" />,
+      features: [
+        "Quick account opening process",
+        "Guidance on required documents",
+        "Support for CDS registration",
+        "Assistance with MEROSHARE setup"
+      ]
+    },
+    {
+      title: "Passport Form",
+      description: "Complete assistance with Nepali passport application and renewal.",
+      icon: <FileText className="h-6 w-6" />,
+      features: [
+        "Form filling guidance",
+        "Document preparation help",
+        "Appointment scheduling",
+        "Follow-up support"
+      ]
+    },
+    {
+      title: "Shram Registration",
+      description: "Simplified labor permits and foreign employment registration.",
+      icon: <UserCheck className="h-6 w-6" />,
+      features: [
+        "Foreign employment permits",
+        "Labor card registration",
+        "Document verification",
+        "Status tracking service"
+      ]
+    },
+    {
+      title: "Police Report",
+      description: "Assistance with police report filing and character certificates.",
+      icon: <Shield className="h-6 w-6" />,
+      features: [
+        "Online reporting assistance",
+        "Character certificate application",
+        "Document translation",
+        "Follow-up with authorities"
+      ]
+    },
+    {
+      title: "Website Development",
+      description: "Custom website development for Nepali businesses and organizations.",
+      icon: <Globe className="h-6 w-6" />,
+      features: [
+        "Responsive design",
+        "SEO optimization",
+        "Nepali language support",
+        "Secure hosting solutions"
+      ]
+    }
+  ];
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      <ScrollToTop />
       
       <main className="flex-grow pt-24 pb-12">
         <div className="container-custom">
@@ -91,35 +142,68 @@ const Services = () => {
             </p>
           </header>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <ServiceCard
-              title="Digital Payments"
-              description="Easy solutions for online transactions, mobile payments and digital wallets."
-              icon={<CreditCard className="h-6 w-6" />}
-              comingSoon={true}
-            />
-            
-            <ServiceCard
-              title="Email Services"
-              description="Professional email solutions with Nepali language support and spam protection."
-              icon={<MailOpen className="h-6 w-6" />}
-              comingSoon={true}
-            />
-            
-            <ServiceCard
-              title="Website Builder"
-              description="Create your own Nepali website with custom templates and Devanagari support."
-              icon={<Globe className="h-6 w-6" />}
-              comingSoon={true}
-            />
-            
-            <ServiceCard
-              title="Mobile Solutions"
-              description="Mobile app development and consulting services for Nepali businesses."
-              icon={<Smartphone className="h-6 w-6" />}
-              comingSoon={true}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {services.map((service, index) => (
+              <ServiceCard 
+                key={index}
+                title={service.title}
+                description={service.description}
+                icon={service.icon}
+                features={service.features}
+              />
+            ))}
           </div>
+          
+          {/* FAQ Section */}
+          <section className="bg-gray-50 rounded-xl p-6 md:p-8 mb-12">
+            <h2 className="text-2xl font-bold mb-6 flex items-center">
+              <HelpCircle className="h-5 w-5 mr-2 text-nepal-red" />
+              Frequently Asked Questions
+            </h2>
+            
+            <div className="space-y-4">
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h3 className="font-semibold text-lg mb-2">How do I get started with a service?</h3>
+                <p className="text-gray-600">
+                  Simply click the "Contact Now" button on any service card to reach us via WhatsApp. 
+                  Our team will respond promptly to discuss your requirements and guide you through the process.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h3 className="font-semibold text-lg mb-2">What are your service charges?</h3>
+                <p className="text-gray-600">
+                  Our service charges vary depending on the complexity of your requirements. We provide transparent 
+                  pricing with no hidden fees. Contact us for a personalized quote based on your specific needs.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h3 className="font-semibold text-lg mb-2">How long does it take to complete a service?</h3>
+                <p className="text-gray-600">
+                  Service completion times vary based on the nature of the service and external factors like government 
+                  processing times. For Demat accounts, typically 2-3 days; passport assistance, 1-2 weeks; website 
+                  development, 2-4 weeks depending on complexity.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h3 className="font-semibold text-lg mb-2">Do you serve clients outside Kathmandu Valley?</h3>
+                <p className="text-gray-600">
+                  Yes, we serve clients across Nepal. Many of our services can be provided remotely, and for 
+                  those requiring in-person assistance, we have partner networks in major cities throughout Nepal.
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <h3 className="font-semibold text-lg mb-2">Can I track the progress of my service request?</h3>
+                <p className="text-gray-600">
+                  Absolutely! Once you engage our services, you'll receive regular updates via WhatsApp or email. 
+                  We also provide a dedicated point of contact who will keep you informed throughout the process.
+                </p>
+              </div>
+            </div>
+          </section>
           
           {/* Additional Information */}
           <div className="bg-gray-50 rounded-xl p-6 md:p-8 mb-12">
@@ -176,35 +260,46 @@ const Services = () => {
               If you don't see what you're looking for, contact us to discuss custom solutions
               tailored to your specific needs.
             </p>
-            <CustomButton size="lg">
-              Contact Us
-            </CustomButton>
+            <a href="https://wa.me/9779808848817?text=Hello, I'm interested in discussing a custom service requirement with Bishaal Tools." target="_blank" rel="noopener noreferrer">
+              <CustomButton 
+                size="lg"
+                rightIcon={<MessageSquare className="h-5 w-5" />}
+              >
+                Contact Us on WhatsApp
+              </CustomButton>
+            </a>
           </div>
           
           {/* SEO Content */}
           <section className="mt-12 max-w-3xl mx-auto prose prose-sm prose-gray">
-            <h2>Digital Services for Nepali Users</h2>
+            <h2>Essential Services for Nepali Citizens</h2>
             <p>
-              At Bishaal Tools, we're committed to providing high-quality digital services designed specifically 
-              for the Nepali market. Our range of services addresses the unique challenges and opportunities 
-              in Nepal's digital landscape.
+              At Bishaal Tools, we provide a comprehensive range of services designed to simplify bureaucratic 
+              processes and digital needs for Nepali citizens. Our services address common challenges faced by 
+              Nepalis in their day-to-day interactions with government systems and digital platforms.
             </p>
             <p>
-              From digital payment solutions that work with local banks and e-wallets, to website building tools
-              with full Devanagari support, our services are built to meet the specific needs of Nepali users 
-              and businesses.
+              From helping with Demat account registration for stock market investment to assisting with passport 
+              applications, labor permits for foreign employment (Shram registration), police reports, and modern 
+              website development, our services are tailored to meet the specific needs of Nepali users.
             </p>
-            <h3>Upcoming Services</h3>
+            <h3>Navigating Bureaucratic Processes Made Easy</h3>
             <p>
-              We're constantly working on expanding our service offerings. Our upcoming services include 
-              mobile app development, email solutions with Nepali language support, and more. Stay tuned
-              for these exciting additions to our platform.
+              Government procedures in Nepal can often be time-consuming and complex. Our service offerings simplify 
+              these processes by providing expert guidance, document preparation assistance, and follow-up support. 
+              Whether you're applying for a new passport, need a police report for overseas employment, or want to 
+              start investing in the Nepal Stock Exchange (NEPSE), our team can guide you through every step.
             </p>
-            <h3>Custom Solutions</h3>
+            <h3>Digital Transformation for Nepali Businesses</h3>
             <p>
-              Every business has unique needs. We offer custom digital solution development for Nepali
-              businesses of all sizes, from startups to established enterprises. Contact us to discuss 
-              how we can help digitize and optimize your operations.
+              Our website development services help Nepali businesses establish a strong online presence with 
+              modern, responsive websites. We understand the local market and create solutions that work well 
+              within Nepal's digital infrastructure, including Nepali language support, optimization for varied 
+              internet speeds, and integration with local payment gateways.
+            </p>
+            <p>
+              Contact us today via WhatsApp to learn how we can assist you with any of our services. Our team 
+              of experts is ready to provide personalized support for your specific requirements.
             </p>
           </section>
         </div>

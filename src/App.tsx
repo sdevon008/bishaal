@@ -15,6 +15,7 @@ import BlogPost from "./pages/BlogPost";
 import CurrencyConverter from "./pages/CurrencyConverter";
 import Services from "./pages/Services";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/shared/ScrollToTop";
 
 const queryClient = new QueryClient();
 
