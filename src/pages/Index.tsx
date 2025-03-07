@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calendar, 
@@ -17,6 +16,12 @@ import ToolCard from '@/components/shared/ToolCard';
 import AdSpace from '@/components/shared/AdSpace';
 
 const Index = () => {
+  const toolsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTools = () => {
+    toolsRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -41,13 +46,15 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <CustomButton size="lg" rightIcon={<ChevronRight />}>
+              <CustomButton size="lg" rightIcon={<ChevronRight />} onClick={scrollToTools}>
                 Explore Tools
               </CustomButton>
               
-              <CustomButton size="lg" variant="outline">
-                Learn More
-              </CustomButton>
+              <Link to="/blog">
+                <CustomButton size="lg" variant="outline">
+                  Learn More
+                </CustomButton>
+              </Link>
             </div>
           </div>
         </div>
@@ -59,7 +66,7 @@ const Index = () => {
       </section>
       
       {/* Tools Grid Section */}
-      <section className="py-16 bg-gray-50">
+      <section ref={toolsRef} className="py-16 bg-gray-50">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
