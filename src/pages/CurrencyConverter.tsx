@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { useToast } from "@/hooks/use-toast";
-import { toast } from "sonner";
+import { sonnerToast } from "@/components/ui/use-toast";
 import { 
   DollarSign, 
   ArrowLeftRight, 
@@ -96,7 +97,8 @@ const CurrencyConverter = () => {
           convertCurrency(amount, fromCurrency, toCurrency, data.conversion_rates);
         }
         
-        toast.success("Exchange rates updated", {
+        // Use sonnerToast instead of toast for success
+        sonnerToast.success("Exchange rates updated", {
           description: "The latest exchange rates have been fetched successfully."
         });
       } else {
@@ -104,7 +106,8 @@ const CurrencyConverter = () => {
       }
     } catch (error) {
       console.error("Error fetching exchange rates:", error);
-      toast.error("Error fetching exchange rates", {
+      // Use sonnerToast instead of toast for error
+      sonnerToast.error("Error fetching exchange rates", {
         description: "Please try again later."
       });
     } finally {
