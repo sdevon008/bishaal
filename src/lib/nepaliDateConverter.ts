@@ -218,7 +218,7 @@ export function adToBs(adDate: Date): { year: number; month: number; day: number
 }
 
 // Convert BS date to AD date
-export function bsToAd(bsYear: number, bsMonth: number, bsDay: number): Date {
+export function bsToAd(bsYear: number, bsMonth: number, bsDay: number): { year: number; month: number; day: number } {
   if (bsYear < minBsYear || bsYear > maxBsYear) {
     throw new Error(`Year must be between ${minBsYear} and ${maxBsYear}`);
   }
@@ -255,7 +255,11 @@ export function bsToAd(bsYear: number, bsMonth: number, bsDay: number): Date {
   const adDate = new Date(BS_START_DATE);
   adDate.setDate(BS_START_DATE.getDate() + totalDays);
   
-  return adDate;
+  return { 
+    year: adDate.getFullYear(), 
+    month: adDate.getMonth(), 
+    day: adDate.getDate() 
+  };
 }
 
 // Format BS date 
@@ -322,4 +326,62 @@ export function isValidBsDate(bsYear: number, bsMonth: number, bsDay: number): b
   }
   
   return true;
+}
+
+// Get BS month days - this is needed for the DateConverter component
+export function getBsMonthDays(bsYear: number, bsMonth: number): number {
+  // Convert to 0-based month index if it's 1-based
+  const monthIndex = bsMonth > 0 && bsMonth <= 12 ? bsMonth - 1 : bsMonth;
+  
+  if (bsYear < minBsYear || bsYear > maxBsYear) {
+    return 30; // Default
+  }
+  
+  if (monthIndex < 0 || monthIndex > 11) {
+    return 30; // Default
+  }
+  
+  return BS_DATE_DATA[bsYear - minBsYear][monthIndex];
+}
+
+// Get AD month days
+export function getAdMonthDays(adYear: number, adMonth: number): number {
+  // Convert to 0-based month index if it's 1-based
+  const monthIndex = adMonth > 0 && adMonth <= 12 ? adMonth - 1 : adMonth;
+  
+  // Array of days in each month (non-leap year)
+  const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  
+  // Adjust for leap year
+  if (monthIndex === 1) { // February
+    if ((adYear % 4 === 0 && adYear % 100 !== 0) || adYear % 400 === 0) {
+      return 29;
+    }
+  }
+  
+  return daysInMonth[monthIndex];
+}
+
+// Get BS month text
+export function getBsMonthText(month: number): string {
+  // Convert to 0-based month index if needed
+  const monthIndex = month > 0 && month <= 12 ? month - 1 : month;
+  
+  if (monthIndex < 0 || monthIndex > 11) {
+    return '';
+  }
+  
+  return BS_MONTHS_EN[monthIndex];
+}
+
+// Get AD month text
+export function getAdMonthText(month: number): string {
+  // Convert to 0-based month index if needed
+  const monthIndex = month > 0 && month <= 12 ? month - 1 : month;
+  
+  if (monthIndex < 0 || monthIndex > 11) {
+    return '';
+  }
+  
+  return AD_MONTHS[monthIndex];
 }

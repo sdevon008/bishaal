@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
@@ -12,7 +11,14 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import CustomButton from '@/components/ui/CustomButton';
-import { bsToAd, adToBs, getBsMonthDays, getAdMonthDays, getBsMonthText, getAdMonthText } from '@/lib/nepaliDateConverter';
+import { 
+  bsToAd, 
+  adToBs, 
+  getBsMonthDays, 
+  getAdMonthDays, 
+  getBsMonthText, 
+  getAdMonthText 
+} from '@/lib/nepaliDateConverter';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import ScrollToTop from '@/components/shared/ScrollToTop';
 
@@ -41,20 +47,21 @@ const DateConverter = () => {
   const convertDate = () => {
     if (dateType === 'bs') {
       try {
-        const adDate = bsToAd(bsYear, bsMonth, bsDay);
-        setConvertedDate(`${getAdMonthText(adDate.month)} ${adDate.day}, ${adDate.year}`);
+        const adDate = bsToAd(bsYear, bsMonth - 1, bsDay);
+        setConvertedDate(`${getAdMonthText(adDate.month + 1)} ${adDate.day}, ${adDate.year}`);
         setAdYear(adDate.year);
-        setAdMonth(adDate.month);
+        setAdMonth(adDate.month + 1);
         setAdDay(adDate.day);
       } catch (error) {
         setConvertedDate('Invalid Date');
       }
     } else {
       try {
-        const bsDate = adToBs(adYear, adMonth, adDay);
-        setConvertedDate(`${getBsMonthText(bsDate.month)} ${bsDate.day}, ${bsDate.year}`);
+        const date = new Date(adYear, adMonth - 1, adDay);
+        const bsDate = adToBs(date);
+        setConvertedDate(`${getBsMonthText(bsDate.month + 1)} ${bsDate.day}, ${bsDate.year}`);
         setBsYear(bsDate.year);
-        setBsMonth(bsDate.month);
+        setBsMonth(bsDate.month + 1);
         setBsDay(bsDate.day);
       } catch (error) {
         setConvertedDate('Invalid Date');
