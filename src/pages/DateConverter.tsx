@@ -1,4 +1,4 @@
-<lov-codelov-code>
+
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import CustomButton from '@/components/ui/CustomButton';
 import { bsToAd, adToBs, getBsMonthDays, getAdMonthDays, getBsMonthText, getAdMonthText } from '@/lib/nepaliDateConverter';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import ScrollToTop from '@/components/shared/ScrollToTop';
 
 type DateType = 'bs' | 'ad';
 
@@ -79,6 +80,7 @@ const DateConverter = () => {
       </Helmet>
       
       <Navbar />
+      <ScrollToTop />
       
       <main className="flex-grow pt-24 pb-12">
         <div className="container-custom">
@@ -319,4 +321,3 @@ const DateConverter = () => {
 };
 
 export default DateConverter;
-</lov-code>
