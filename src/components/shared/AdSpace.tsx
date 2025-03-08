@@ -1,7 +1,8 @@
+
 import React, { useEffect } from 'react';
 
 interface AdSpaceProps {
-  size: 'banner' | 'mediumRectangle' | 'largeRectangle' | 'responsive';
+  size: 'banner' | 'mediumRectangle' | 'largeRectangle' | 'responsive' | 'leaderboard';
   className?: string;
 }
 
@@ -23,6 +24,10 @@ const AdSpace: React.FC<AdSpaceProps> = ({ size, className }) => {
   switch (size) {
     case 'banner':
       adStyle = { width: '728px', height: '90px' };
+      adFormat = "horizontal";
+      break;
+    case 'leaderboard':
+      adStyle = { width: '728px', height: '90px' }; // Leaderboard is essentially the same as banner in dimensions
       adFormat = "horizontal";
       break;
     case 'mediumRectangle':

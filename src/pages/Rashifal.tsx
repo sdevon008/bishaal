@@ -191,7 +191,7 @@ const Rashifal = () => {
             
             {/* AdSpace for monetization */}
             <div className="mb-8">
-              <AdSpace size="leaderboard" className="mx-auto" />
+              <AdSpace size="banner" className="mx-auto" />
             </div>
             
             <motion.div variants={itemVariants}>
