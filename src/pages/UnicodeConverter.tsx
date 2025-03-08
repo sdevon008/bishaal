@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -33,9 +32,9 @@ const UnicodeConverter = () => {
               </p>
             </div>
             
-            {/* Ad Space */}
+            {/* Top Ad Banner */}
             <div className="mb-8">
-              <AdSpace size="banner" />
+              <AdSpace size="banner" className="mx-auto" />
             </div>
             
             {/* Unicode Converter */}

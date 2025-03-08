@@ -8,6 +8,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import AdSpace from '@/components/shared/AdSpace';
 import blogPosts from '@/data/blogPosts';
 import { formatDistance } from 'date-fns';
 
@@ -46,6 +47,11 @@ const Blog = () => {
       
       <main className="flex-grow pt-24 pb-16">
         <div className="container-custom">
+          {/* Top Ad Banner */}
+          <div className="mb-8">
+            <AdSpace size="banner" className="mx-auto" />
+          </div>
+          
           <motion.div 
             className="max-w-4xl mx-auto"
             initial="hidden"
@@ -117,6 +123,11 @@ const Blog = () => {
               ))}
             </motion.div>
           </motion.div>
+          
+          {/* Bottom Ad Banner */}
+          <div className="mt-8">
+            <AdSpace size="banner" className="mx-auto" />
+          </div>
         </div>
       </main>
       

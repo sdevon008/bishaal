@@ -26,8 +26,13 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
+      {/* Top Ad Banner */}
+      <div className="container-custom mt-24 mb-6">
+        <AdSpace size="banner" className="mx-auto" />
+      </div>
+      
       {/* Hero Section */}
-      <section className="mt-16 pt-20 pb-24 relative overflow-hidden">
+      <section className="pt-12 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 nepal-pattern"></div>
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -250,6 +255,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+      
+      {/* Bottom Ad Banner */}
+      <div className="container-custom my-12">
+        <AdSpace size="banner" className="mx-auto" />
+      </div>
       
       {/* Footer */}
       <Footer />

@@ -3,6 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import AdSpace from '@/components/shared/AdSpace';
 
 const TermsOfService = () => {
   return (
@@ -17,6 +18,11 @@ const TermsOfService = () => {
       
       <main className="flex-grow pt-24 pb-16">
         <div className="container-custom">
+          {/* Top Ad Banner */}
+          <div className="mb-8">
+            <AdSpace size="banner" className="mx-auto" />
+          </div>
+          
           <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-sm">
             <h1 className="text-3xl font-bold mb-6">Terms of Service</h1>
             <div className="prose prose-slate max-w-none">
@@ -151,6 +157,11 @@ const TermsOfService = () => {
                 </p>
               </section>
             </div>
+          </div>
+          
+          {/* Bottom Ad Banner */}
+          <div className="mt-8">
+            <AdSpace size="banner" className="mx-auto" />
           </div>
         </div>
       </main>
