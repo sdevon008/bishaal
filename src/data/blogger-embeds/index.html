@@ -38,6 +38,8 @@
       border-radius: 4px;
       overflow-x: auto;
       font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
     }
     .instructions {
       background: #e9ecef;
@@ -45,9 +47,35 @@
       border-left: 4px solid #dc3545;
       margin: 20px 0;
     }
+    .preview-frame {
+      height: 100px;
+      background: #dc3545;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px 4px 0 0;
+    }
+    .copy-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .copy-btn:hover {
+      background: #218838;
+    }
     @media (max-width: 768px) {
       body {
         padding: 10px;
+      }
+      .code-block {
+        font-size: 12px;
       }
     }
   </style>
@@ -56,22 +84,28 @@
   <h1>Your Nepal App - Blogger Embed Codes</h1>
   
   <div class="instructions">
-    <p><strong>How to use:</strong> Copy the HTML code for the page you want to embed, then paste it into your Blogger post in HTML view mode.</p>
+    <p><strong>How to use:</strong> Click the "Copy Code" button for the page you want to embed, then paste it into your Blogger post in HTML view mode.</p>
+    <ol>
+      <li>In Blogger, create or edit a post</li>
+      <li>Click the "HTML" button in the editor (it looks like "&lt;&gt;")</li>
+      <li>Paste the copied code</li>
+      <li>Switch back to Compose view and publish your post</li>
+    </ol>
   </div>
 
   <h2>1. Home Page</h2>
   <div class="embed-container">
     <p>Preview:</p>
     <div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
-      <div style="height:100px; background:#dc3545; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">
+      <div class="preview-frame">
         Your Nepal App - Home Page Preview
       </div>
       <div style="background:#f8f9fa; padding:12px; border-top:1px solid #e9ecef; font-family:Arial, sans-serif; font-size:14px;">
         <p style="margin:0; line-height:1.5;">Explore <a href="https://yournepalapp.com/" style="color:#dc3545; text-decoration:none; font-weight:bold;">Your Nepal App</a> - Your comprehensive resource for Nepali utilities including date conversion, calendar, unicode converter, and more.</p>
       </div>
     </div>
-    <p>HTML Code:</p>
-    <pre class="code-block"><!-- Blogger Embed Code for Home Page -->
+    <button class="copy-btn" onclick="copyToClipboard('home-code')">Copy Code</button>
+    <pre class="code-block" id="home-code"><!-- Blogger Embed Code for Home Page -->
 &lt;div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;"&gt;
   &lt;iframe 
     src="https://yournepalapp.com/" 
@@ -92,15 +126,15 @@
   <div class="embed-container">
     <p>Preview:</p>
     <div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
-      <div style="height:100px; background:#dc3545; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">
+      <div class="preview-frame">
         Nepali Date Converter Preview
       </div>
       <div style="background:#f8f9fa; padding:12px; border-top:1px solid #e9ecef; font-family:Arial, sans-serif; font-size:14px;">
         <p style="margin:0; line-height:1.5;">Try our <a href="https://yournepalapp.com/date-converter" style="color:#dc3545; text-decoration:none; font-weight:bold;">Nepali Date Converter</a> - Convert between Bikram Sambat (BS) and Gregorian (AD) dates easily and accurately.</p>
       </div>
     </div>
-    <p>HTML Code:</p>
-    <pre class="code-block"><!-- Blogger Embed Code for Date Converter Page -->
+    <button class="copy-btn" onclick="copyToClipboard('date-code')">Copy Code</button>
+    <pre class="code-block" id="date-code"><!-- Blogger Embed Code for Date Converter Page -->
 &lt;div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;"&gt;
   &lt;iframe 
     src="https://yournepalapp.com/date-converter" 
@@ -119,8 +153,17 @@
 
   <h2>3. Nepali Calendar</h2>
   <div class="embed-container">
-    <p>HTML Code:</p>
-    <pre class="code-block"><!-- Blogger Embed Code for Nepali Calendar Page -->
+    <p>Preview:</p>
+    <div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
+      <div class="preview-frame">
+        Nepali Calendar Preview
+      </div>
+      <div style="background:#f8f9fa; padding:12px; border-top:1px solid #e9ecef; font-family:Arial, sans-serif; font-size:14px;">
+        <p style="margin:0; line-height:1.5;">View the <a href="https://yournepalapp.com/nepali-calendar" style="color:#dc3545; text-decoration:none; font-weight:bold;">Nepali Calendar</a> - Check Nepali dates, festivals, holidays and important events in the Bikram Sambat calendar.</p>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyToClipboard('calendar-code')">Copy Code</button>
+    <pre class="code-block" id="calendar-code"><!-- Blogger Embed Code for Nepali Calendar Page -->
 &lt;div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;"&gt;
   &lt;iframe 
     src="https://yournepalapp.com/nepali-calendar" 
@@ -139,8 +182,17 @@
 
   <h2>4. Unicode Converter</h2>
   <div class="embed-container">
-    <p>HTML Code:</p>
-    <pre class="code-block"><!-- Blogger Embed Code for Unicode Converter Page -->
+    <p>Preview:</p>
+    <div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
+      <div class="preview-frame">
+        Nepali Unicode Converter Preview
+      </div>
+      <div style="background:#f8f9fa; padding:12px; border-top:1px solid #e9ecef; font-family:Arial, sans-serif; font-size:14px;">
+        <p style="margin:0; line-height:1.5;">Use our <a href="https://yournepalapp.com/unicode-converter" style="color:#dc3545; text-decoration:none; font-weight:bold;">Nepali Unicode Converter</a> - Convert between Preeti and Unicode for proper Nepali text display online.</p>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyToClipboard('unicode-code')">Copy Code</button>
+    <pre class="code-block" id="unicode-code"><!-- Blogger Embed Code for Unicode Converter Page -->
 &lt;div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;"&gt;
   &lt;iframe 
     src="https://yournepalapp.com/unicode-converter" 
@@ -159,8 +211,17 @@
 
   <h2>5. Load Shedding</h2>
   <div class="embed-container">
-    <p>HTML Code:</p>
-    <pre class="code-block"><!-- Blogger Embed Code for Load Shedding Page -->
+    <p>Preview:</p>
+    <div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
+      <div class="preview-frame">
+        Nepal Load Shedding Schedule Preview
+      </div>
+      <div style="background:#f8f9fa; padding:12px; border-top:1px solid #e9ecef; font-family:Arial, sans-serif; font-size:14px;">
+        <p style="margin:0; line-height:1.5;">Check the <a href="https://yournepalapp.com/load-shedding" style="color:#dc3545; text-decoration:none; font-weight:bold;">Nepal Load Shedding Schedule</a> - Stay updated with the latest power outage timings for your area.</p>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyToClipboard('load-code')">Copy Code</button>
+    <pre class="code-block" id="load-code"><!-- Blogger Embed Code for Load Shedding Page -->
 &lt;div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;"&gt;
   &lt;iframe 
     src="https://yournepalapp.com/load-shedding" 
@@ -179,8 +240,17 @@
 
   <h2>6. Currency Converter</h2>
   <div class="embed-container">
-    <p>HTML Code:</p>
-    <pre class="code-block"><!-- Blogger Embed Code for Currency Converter Page -->
+    <p>Preview:</p>
+    <div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
+      <div class="preview-frame">
+        Nepali Currency Converter Preview
+      </div>
+      <div style="background:#f8f9fa; padding:12px; border-top:1px solid #e9ecef; font-family:Arial, sans-serif; font-size:14px;">
+        <p style="margin:0; line-height:1.5;">Try our <a href="https://yournepalapp.com/currency-converter" style="color:#dc3545; text-decoration:none; font-weight:bold;">Nepali Currency Converter</a> - Convert between NPR and other major currencies with up-to-date exchange rates.</p>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyToClipboard('currency-code')">Copy Code</button>
+    <pre class="code-block" id="currency-code"><!-- Blogger Embed Code for Currency Converter Page -->
 &lt;div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;"&gt;
   &lt;iframe 
     src="https://yournepalapp.com/currency-converter" 
@@ -199,8 +269,17 @@
 
   <h2>7. Services</h2>
   <div class="embed-container">
-    <p>HTML Code:</p>
-    <pre class="code-block"><!-- Blogger Embed Code for Services Page -->
+    <p>Preview:</p>
+    <div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;">
+      <div class="preview-frame">
+        Nepali Services Preview
+      </div>
+      <div style="background:#f8f9fa; padding:12px; border-top:1px solid #e9ecef; font-family:Arial, sans-serif; font-size:14px;">
+        <p style="margin:0; line-height:1.5;">Explore <a href="https://yournepalapp.com/services" style="color:#dc3545; text-decoration:none; font-weight:bold;">Nepali Services</a> - Access all our tools and services designed for daily use in Nepal.</p>
+      </div>
+    </div>
+    <button class="copy-btn" onclick="copyToClipboard('services-code')">Copy Code</button>
+    <pre class="code-block" id="services-code"><!-- Blogger Embed Code for Services Page -->
 &lt;div style="max-width:100%; overflow:hidden; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); margin-bottom:20px;"&gt;
   &lt;iframe 
     src="https://yournepalapp.com/services" 
@@ -217,5 +296,22 @@
 &lt;/div&gt;</pre>
   </div>
 
+  <script>
+    function copyToClipboard(elementId) {
+      const el = document.getElementById(elementId);
+      const text = el.textContent;
+      
+      navigator.clipboard.writeText(text).then(function() {
+        const btn = el.previousElementSibling;
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(function() {
+          btn.textContent = originalText;
+        }, 1500);
+      }, function() {
+        alert('Failed to copy');
+      });
+    }
+  </script>
 </body>
 </html>
